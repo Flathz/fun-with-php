@@ -12,7 +12,7 @@ class MatchController{
     /**
      * @Route("/index")
      */
-    public function index(PlayerRepository $PlayerRepository){/*
+    public function index(PlayerRepository $PlayerRepository){
         $playerA = new Player("A");
         $playerB = new Player("B");
         $playerC = new Player("C");
@@ -22,7 +22,6 @@ class MatchController{
         $playerB->setPoints("2500");
         $playerC->setPoints("1200");
         $playerD->setPoints("1800");
-*/
 
         $Players = $PlayerRepository->findAll();
 
@@ -33,7 +32,9 @@ class MatchController{
 
 
         $response = new Response('Player A :'.$playerA->getPoints(), "\n",
-        'Player A :'.$playerA->getPoints(), "\n"
+        'Player A :'.$playerA->getPoints(), "\n",
+        'Player B :'.$playerB->getPoints(), "\n",
+        'Player C :'.$playerC->getPoints(), "\n"
 
     
         
