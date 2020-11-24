@@ -1,6 +1,6 @@
 <?php
 
-require "Player.php";
+namespace App\Entity;
 
 
 class Match{
@@ -13,18 +13,19 @@ class Match{
     }
 
     public function get_proba(){
-        return (1/ (1 + pow(10, (($this->playerB->getPoints() - $this->playerA->getPoints())/400))));
+        $nb = (1/ (1 + pow(10, (($this->playerB->getPoints() - $this->playerA->getPoints())/400))));
+        return (round($nb, 3));
     }
 
 
-    public function endMatch(int $winner){
-        if ($winner == 1){
-            $this->playerA->setPoints($this->playerA->getPoints() + 32 * (1 - $this->get_proba()));
-            $this->playerB->setPoints($this->playerB->getPoints() + 32 * (0 - (1-$this->get_proba())));
+    public function endMatch(Player $winner){
+        if ($winner !== null){
+            $this->playerA->setPoints(round($this->playerA->getPoints() + 32 * (1 - $this->get_proba()),3));
+            $this->playerB->setPoints(round($this->playerB->getPoints() + 32 * (0 - (1-$this->get_proba())),3));
         }
         else {
-            $this->playerA->setPoints($this->playerA->getPoints() + 32 * (0 - $this->get_proba()));
-            $this->playerB->setPoints($this->playerB->getPoints() + 32 * (1 - (1-$this->get_proba())));
+            $this->playerA->setPoints(round($this->playerA->getPoints() + 32 * (0 - $this->get_proba()),3));
+            $this->playerB->setPoints(round($this->playerB->getPoints() + 32 * (1 - (1-$this->get_proba())),3));
         }
     }
 }

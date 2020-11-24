@@ -12,7 +12,7 @@ class MatchController{
     /**
      * @Route("/index")
      */
-    public function index(PlayerRepository $PlayerRepository){
+    public function index(){
         $playerA = new Player("A");
         $playerB = new Player("B");
         $playerC = new Player("C");
@@ -23,27 +23,23 @@ class MatchController{
         $playerC->setPoints("1200");
         $playerD->setPoints("1800");
 
-        $Players = $PlayerRepository->findAll();
-
         $matchAB = new Match($playerA,$playerB);
-        $matchAB->get_proba();
-        (1-$matchAB->get_proba());
+        $matchAC = new Match($playerA,$playerC);
+        $matchAD = new Match($playerA,$playerD);
+
         $matchAB->endMatch($playerB);
 
-
-        $response = new Response('Player A :'.$playerA->getPoints(), "\n",
-        'Player A :'.$playerA->getPoints(), "\n",
-        'Player B :'.$playerB->getPoints(), "\n",
-        'Player C :'.$playerC->getPoints(), "\n"
-
-    
-        
-        
-        
-        
-        
-        , Response::HTTP_OK);
-
+        $response = new Response();
+        $response = new Response(json_encode(array(
+            'Joueur A face au joueur B' => $matchAB->get_proba(),
+            'Joueur B face au joueur A' => (1-$matchAB->get_proba()),
+            'Joueur A face au joueur C' => $matchAC->get_proba(),
+            'Joueur C face au joueur A' => (1-$matchAC->get_proba()),
+            'Joueur A face au joueur D' => $matchAD->get_proba(),
+            'Joueur D face au joueur A' => (1-$matchAD->get_proba()),
+            'Joueur A apres match contre B' => $playerA->getPoints(),
+            'Joueur B apres match contre B' => $playerB->getPoints(),
+            )));
 
         return $response;
     }

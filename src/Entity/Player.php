@@ -1,5 +1,7 @@
+<?php
 
-<?php 
+namespace App\Entity;
+
 class Player
 {
     private $_name;
